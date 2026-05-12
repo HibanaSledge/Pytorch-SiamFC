@@ -5,6 +5,10 @@ The script mirrors the validation path used by ``train.py`` for a single
 reference/search pair and writes the intermediate tensors as image files. It is
 intended for debugging and explaining the SiamFC data flow rather than for bulk
 evaluation.
+
+The ``--data_dir`` argument must point to an ImageNet VID dataset root containing
+both frames and XML annotations, not to a single image. The repository ships the
+script and a pretrained checkpoint, but not the ImageNet VID validation data.
 """
 import argparse
 import logging
@@ -15,9 +19,14 @@ from os.path import abspath, dirname, isfile, join
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description="Visualize every major intermediate artifact for one validation sample.")
+        description="Visualize every major intermediate artifact for one validation sample.",
+        epilog=("DATASET NOTE: --data_dir is the ImageNet VID dataset root, not a "
+                "single image. It must contain Data/VID/val and Annotations/VID/val "
+                "with matching video frames and XML annotations."))
     parser.add_argument('-d', '--data_dir', required=True,
-                        help="Full path to the ImageNet VID dataset root.")
+                        help=("Full path to the ImageNet VID dataset root; this is a "
+                              "sequence dataset with Data/VID/val and Annotations/VID/val, "
+                              "not a single image path."))
     parser.add_argument('-e', '--exp_name', default='default',
                         help="Experiment folder under training/experiments containing parameters.json.")
     parser.add_argument('-o', '--output_dir', default='validation_flow_viz',

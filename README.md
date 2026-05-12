@@ -190,6 +190,8 @@ The results of the evaluation are then stored in `metrics_test_best.json`.
 
 To inspect one validation pair from input frames to the final SiamFC response map, use `visualize_validation_flow.py`. The script mirrors the single-sample validation path, saves each major intermediate artifact as an image, and writes a small `manifest.txt` with the frame paths and scalar metrics.
 
+`--data_dir` must be the root of an extracted ImageNet VID dataset, not a path to one standalone image. A validation sample in this project is a pair of annotated frames sampled from a video sequence; the script therefore needs both `Data/VID/val` frame files and matching `Annotations/VID/val` XML files. This repository does not include the ImageNet VID validation dataset itself; it only includes code, demo images, and the `BaselinePretrained.pth.tar` checkpoint.
+
 ```
 python visualize_validation_flow.py \
   --data_dir <FULL_PATH_TO_DATASET_ROOT> \

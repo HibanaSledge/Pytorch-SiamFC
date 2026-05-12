@@ -185,6 +185,22 @@ python train.py -m eval -r <NAME_OF_MODEL> -d <FULL_PATH_TO_DATASET_ROOT> -e <EX
 The results of the evaluation are then stored in `metrics_test_best.json`.
 
 
+
+### Single Validation Flow Visualization
+
+To inspect one validation pair from input frames to the final SiamFC response map, use `visualize_validation_flow.py`. The script mirrors the single-sample validation path, saves each major intermediate artifact as an image, and writes a small `manifest.txt` with the frame paths and scalar metrics.
+
+```
+python visualize_validation_flow.py \
+  --data_dir <FULL_PATH_TO_DATASET_ROOT> \
+  --exp_name <EXP_NAME> \
+  --restore_file best \
+  --sample_idx 0 \
+  --output_dir validation_flow_viz
+```
+
+The output directory contains the raw reference/search frames with bounding boxes, the resized reference/search crops, the positive-label and loss-mask maps, reference/search embedding feature grids, the correlation logits, sigmoid score map, a score-map overlay on the search crop, and a compact summary image. If `--restore_file` or `--checkpoint` is omitted, the script still runs but visualizes a randomly initialized model. Use `--imutils_flag safe` if libjpeg-turbo/jpeg4py is not installed.
+
 ### Tracking
 
 [Under Development]
